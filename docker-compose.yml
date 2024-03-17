@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: ./php-app
+      dockerfile: Dockerfile
+    volumes:
+      - ./php-app:/var/www/html
+    ports:
+      - "8088:80"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+  db:
+    image: "mysql:5.7"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+    volumes:
+      - ./mysql/data:/var/lib/mysql
